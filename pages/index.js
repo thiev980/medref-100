@@ -29,6 +29,7 @@ function DetailModal({ item, onClose }) {
 
   const sections = [
     { label: 'Ursachen', text: item.causes, emoji: '🔍' },
+    { label: 'Diagnostik', text: item.diagnostik, emoji: '🩺' },
     { label: 'Behandlung', text: item.treatment, emoji: '💊' },
     { label: 'Medikamente', text: item.meds, emoji: '💉', pills: true },
     { label: 'Wirkstoffe', text: item.agents, emoji: '🧪', pills: true },
@@ -142,7 +143,7 @@ export default function Home({ allConditions }) {
       const q = search.toLowerCase();
       if (mode === 'symptom') {
         items = items.filter(d =>
-          [d.name, d.causes, d.treatment, d.cat, d.icd, d.notes].some(f => f.toLowerCase().includes(q))
+          [d.name, d.causes, d.diagnostik, d.treatment, d.cat, d.icd, d.notes].some(f => f.toLowerCase().includes(q))
         );
       } else {
         items = items.filter(d =>
@@ -343,7 +344,7 @@ export default function Home({ allConditions }) {
 export async function getStaticProps() {
   return {
     props: {
-      allConditions: CONDITIONS,
+      allConditions: JSON.parse(JSON.stringify(CONDITIONS)),
     },
   };
 }

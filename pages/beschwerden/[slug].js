@@ -43,7 +43,7 @@ export default function ConditionPage({ condition, relatedConditions }) {
   if (!condition) return null;
   const cat = CATEGORIES[condition.cat] || CATEGORIES['Allgemein'];
 
-  const seoDesc = `${condition.name} (${condition.icd}): Ursachen, Behandlung, Medikamente und Dosierung. Schweizer Referenz mit ${condition.meds.split(',').length} Medikamenten.`;
+  const seoDesc = `${condition.name} (${condition.icd}): Diagnostik, Ursachen, Behandlung, Medikamente und Dosierung. Schweizer Referenz mit ${condition.meds.split(',').length} Medikamenten.`;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'MedicalCondition',
@@ -55,6 +55,9 @@ export default function ConditionPage({ condition, relatedConditions }) {
     })),
     signOrSymptom: condition.causes.split(';').slice(0, 3).map(s => ({
       '@type': 'MedicalSignOrSymptom', name: s.trim(),
+    })),
+    typicalTest: condition.diagnostik.split(';').slice(0, 3).map(t => ({
+      '@type': 'MedicalTest', name: t.trim(),
     })),
   };
 
@@ -124,6 +127,7 @@ export default function ConditionPage({ condition, relatedConditions }) {
         <main style={{ maxWidth: 740, margin: '0 auto', padding: '28px 16px 50px' }}>
           <article>
             <Section label="Häufige Ursachen" emoji="🔍" text={condition.causes} color={cat.color} />
+            <Section label="Diagnostik" emoji="🩺" text={condition.diagnostik} color={cat.color} />
             <Section label="Übliche Behandlung" emoji="💊" text={condition.treatment} color={cat.color} />
             <Section label="Medikamente (Markennamen)" emoji="💉" text={condition.meds} color={cat.color} pills />
             <Section label="Wirkstoffe (INN)" emoji="🧪" text={condition.agents} color={cat.color} pills />
@@ -184,6 +188,6 @@ export async function getStaticProps({ params }) {
     .map(c => ({ id: c.id, name: c.name, slug: c.slug }));
 
   return {
-    props: { condition, relatedConditions },
+    props: JSON.parse(JSON.stringify({ condition, relatedConditions })),
   };
 }
