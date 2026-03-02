@@ -1,0 +1,20 @@
+{
+  "name": "medref-ch",
+  "version": "1.0.0",
+  "description": "MedRef CH – Interaktive medizinische Referenz Schweiz & Europa. Top 100 Beschwerden mit Medikamenten, Wirkstoffen und Dosierungen.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "postbuild": "next-sitemap"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "next-sitemap": "^4.2.0"
+  }
+}
